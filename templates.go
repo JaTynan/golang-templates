@@ -6,6 +6,9 @@ import (
 	"text/template"
 )
 
+// 1. Parse your templates, preferrably all at once in glob
+// 2. Then execute templates
+
 func main() {
 
 	// from package template we are going to parse files, and we provide file name.
@@ -52,8 +55,13 @@ func main() {
 		log.Fatalln(errGlob)
 	}
 
-	// now we execute to see one of the templates.
+	// now we execute to see the first template in the glob
 	errGlob = tplGlob.Execute(os.Stdout, nil)
+	if errGlob != nil {
+		log.Fatalln(errGlob)
+	}
+	// execute a specific template by name in the glob
+	errGlob = tplGlob.ExecuteTemplate(os.Stdout, "charlie.gohtml", nil)
 	if errGlob != nil {
 		log.Fatalln(errGlob)
 	}
